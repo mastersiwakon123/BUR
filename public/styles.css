@@ -1,0 +1,250 @@
+
+body {
+    font-family: 'Rubik';
+    }
+    p {
+        border: 5px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(45deg, #ff6ec4, #7873f5);
+        box-shadow: 0 8px 16px rgba(113, 5, 255, 0.541);
+        transition: all 0.3s ease-in-out;
+        background: url('https://th.bing.com/th/id/OIP.BUlLv77QlUPYzNp1CrU8pQHaEC?rs=1&pid=ImgDetMain') no-repeat;
+        background-color: rgb(255, 23, 23);
+    }
+    p {
+        color: #000000;
+    }
+    h1 {
+        border: 5px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(45deg, #2f00d8, #7873f5);
+        box-shadow: 0 8px 16px rgba(111, 0, 255, 0.712);
+        transition: all 0.3s ease-in-out;
+        background: url('https://th.bing.com/th/id/OIP.azQPp-AKuu7EKYGQC5OmLAHaEZ?rs=1&pid=ImgDetMain') no-repeat;
+        background-color: white;
+    }
+    h1 {
+        color: #ffffff;
+    }
+    h2 {
+        border: 5px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(45deg, #2f00d8, #7873f5);
+        box-shadow: 0 8px 16px rgba(111, 0, 255, 0.712);
+        transition: all 0.3s ease-in-out;
+        background: url('https://th.bing.com/th/id/OIP.azQPp-AKuu7EKYGQC5OmLAHaEZ?rs=1&pid=ImgDetMain') no-repeat;
+        background-color: white;
+    }
+    h2 {
+        color: #ffffff;
+    }
+    input {
+        color: #000fe6;
+    }
+    /*Change Text Selection Color*/
+    ::-moz-selection { /* Code for Firefox */
+    color: #e2fe5c;
+      background: #e2fe5c;
+    }
+    .container {
+        border: 5px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(45deg, #2f00d8, #7873f5);
+        box-shadow: 0 8px 16px rgba(111, 0, 255, 0.712);
+        transition: all 0.3s ease-in-out;
+        background: url('https://th.bing.com/th/id/OIP.azQPp-AKuu7EKYGQC5OmLAHaEZ?rs=1&pid=ImgDetMain') no-repeat;
+        background-color: white;
+    }
+
+
+    .form-control {
+        border: 5px solid;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(45deg, #2f00d8, #7873f5);
+        box-shadow: 0 8px 16px rgba(111, 0, 255, 0.712);
+        transition: all 0.3s ease-in-out;
+        background-color: white;
+    }
+    .form-group {
+        color: #000fe6;
+    }
+
+    ::selection {
+      color: rgb(255, 255, 255);
+      background: #b1d6fc;
+    }
+    
+    body {
+        background-color: #95aafc;
+        background-image: linear-gradient(#95aafc % , #B6BBC7 108%); /*gradient of 2 colors, change to whatever you want*/
+        min-height: 50vh;
+        text-align: center;
+    }
+    
+    a.featured:hover,
+    a:hover {
+        background-color: #a77171; /*Hover Color*/
+        color: #d1b5b5;
+    }
+    
+    .logo {
+        width: 120px
+    }
+    
+    .title {
+    color: rgb(255, 232, 232);
+    }
+    .header-text {
+    color: rgb(230, 207, 207);
+    }
+    
+    .buttons{
+    margin-top: 3%;
+    }
+    
+    a {
+        display: block;
+        max-width: 400px;
+        margin: 0 auto 15px;
+        padding: 15px 20px;
+        font-size: .85rem;
+        color: #fff;
+        border: 2px solid #ff0000;
+        text-decoration: none;
+        transition: all .2s ease-in-out;
+        border-radius: 25px;
+        box-shadow: 0px 0px 2px 2px #2b2929;
+    }
+    
+    a.featured {
+        position: relative;
+        background-color: #000000;
+        color: #2b00ff;
+        font-weight: 700
+    }
+    
+    a.featured:before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        border: 2px solid #d3ff00;
+    }
+    
+    h2 {
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 400;
+        letter-spacing: 2px
+    }
+    
+    html {
+        box-sizing: border-box;
+        font-size: 100%
+    }
+    *,
+    :after,
+    :before {
+        box-sizing: inherit
+    }
+    
+    .content {
+    margin-top: 3%;
+    }
+    
+    .channels {
+        display: flex;
+        max-width: 400px;
+        margin: 0 auto;
+        margin-bottom: 15px;
+        position: bottom;
+    }
+    
+    .channels a {
+        flex: 1;
+        padding: 5px 10px;
+        margin-right: 10px;
+        background-color: #ffffff00;
+        border: none
+        
+    }
+    
+    .channels a:last-child {
+        margin-right: 0
+    }
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+html,body{
+    background: #e2fe5c;
+    font-family: 'Poppins', sans-serif;
+}
+::selection{
+    color: #fff;
+    background: #353a3f;
+}
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.container .form{
+    background: #fff;
+    padding: 30px 35px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.container .form form .form-control{
+    height: 40px;
+    font-size: 15px;
+}
+.container .form form .forget-pass{
+    margin: -15px 0 15px 0;
+}
+.container .form form .forget-pass a{
+   font-size: 15px;
+}
+.container .form form .button{
+    background: #949494;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.container .form form .button:hover{
+    background: #000000;
+}
+.container .form form .link{
+    padding: 5px 0;
+}
+.container .form form .link a{
+    color: #c3cefa;
+}
+.container .login-form form p{
+    font-size: 14px;
+}
+.container .row .alert{
+    font-size: 14px;
+}
+
+#done {
+  font-size: 12px;
+}
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('https://th.bing.com/th/id/R.89136a994ec6adbb832dce5ec6e29b72?rik=GBApSv%2f%2bC9sPjA&pid=ImgRaw&r=0') no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.div {
+    flex: 1;
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #ffffff00;
+    border: none
+    
+}

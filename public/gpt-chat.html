@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>คุยกับ GPT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="shgox.css">
+
+    <style>
+  /* สไตล์ของ sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px; /* ปรับให้แคบลง */
+    height: 100%;
+    background-color: #343a40;
+    padding-top: 20px;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    display: none; /* ซ่อน sidebar ในมือถือ */
+    transition: 0.3s ease; /* ทำให้เปิด/ปิด sidebar นุ่มนวล */
+}
+
+.sidebar h4 {
+    color: #f8f9fa;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px; /* ปรับขนาดฟอนต์หัวข้อ */
+}
+
+.sidebar a {
+    color: #f8f9fa;
+    padding: 10px 15px; /* ปรับขนาดปุ่มเล็กลง */
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px; /* ปรับขนาดฟอนต์ */
+    border-radius: 5px;
+    background-color: #495057;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #007bff;
+    transform: scale(1.05); /* ขยายเล็กน้อยเมื่อ hover */
+}
+
+/* สำหรับการแสดง sidebar */
+.sidebar.show {
+    display: block;
+}
+
+/* ปรับขนาดปุ่มในมือถือ */
+.menu-toggle {
+    display: none;
+}
+
+/* ปรับปุ่มสามขีดสำหรับเมนู */
+.menu-toggle {
+    display: block;
+    background-color: #343a40;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-toggle:hover {
+    background-color: #007bff;
+    transform: scale(1.1);
+}
+
+/* ปรับแต่งปุ่ม "กลับหน้าแรก" */
+.top-right-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px; /* ลดขนาดปุ่ม */
+    background-color: #FF6347; /* สีส้มสดใส */
+    color: white;
+    font-size: 14px; /* ลดขนาดฟอนต์ */
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.top-right-button:hover {
+    background-color: #FF4500; /* สีส้มเข้มเมื่อ hover */
+    transform: scale(1.1); /* ขยายขนาดปุ่มเล็กน้อยเมื่อ hover */
+}
+
+/* ปรับแต่งการแสดงข้อความและการจัดตำแหน่ง */
+.content {
+    margin-left: 250px; /* ปรับตำแหน่งเนื้อหาหลังจากแถบเมนู */
+    padding: 20px;
+}
+
+/* GPT chat form styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+textarea {
+    border-radius: 10px;
+    border: 2px solid #007bff;
+    padding: 15px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #FF6347; /* เปลี่ยนสีขอบเมื่อ focus */
+    outline: none;
+}
+
+button#sendMessage {
+    background-color: #32CD32; /* สีเขียวสด */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button#sendMessage:hover {
+    background-color: #228B22; /* เปลี่ยนเป็นสีเขียวเข้มเมื่อ hover */
+    transform: scale(1.05); /* ขยายปุ่มเล็กน้อยเมื่อ hover */
+}
+
+#gptResponse {
+    margin-top: 20px;
+}
+
+.alert-info {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* สำหรับหน้าจอขนาดมือถือ */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: -220px;
+        transition: 0.3s;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .top-right-button {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+
+
+<!-- Content Section -->
+<div class="content">
+    <!-- Button to go to the main page -->
+    <button class="top-right-button" onclick="window.location.href='index.html'">กลับหน้าแรก</button>
+
+    <!-- GPT Chat Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 form">
+                <h3 class="text-center">พูดคุยกับ GPT</h3>
+                <div class="form-group">
+                    <textarea class="form-control" id="gptMessage" placeholder="กรอกข้อความเพื่อพูดคุยกับ GPT..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="form-control btn btn-primary" id="sendMessage" type="button">ส่งข้อความ</button>
+                </div>
+                <div id="gptResponse" class="alert alert-info">
+                    <p><strong>คำตอบจาก GPT:</strong> กรุณากรอกข้อความแล้วคลิก "ส่งข้อความ" เพื่อรับคำตอบจาก GPT.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional script tags to include -->
+<script>
+    // Toggle sidebar on and off for mobile
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('show');
+    }
+
+    // Function to send a request to GPT and display the response
+    function sendGPTMessage(message) {
+        const apiKey = "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"; // Your OpenAI API key
+
+        const requestData = {
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "user", content: message }
+            ]
+        };
+
+        // Send the request to OpenAI API
+        fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            const gptResponse = data.choices[0].message.content;
+            document.getElementById('gptResponse').innerHTML = `<strong>คำตอบจาก GPT:</strong> ${gptResponse}`;
+            document.getElementById('gptMessage').value = '';  // Clear the message after sending
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('gptResponse').innerHTML = `<strong>เกิดข้อผิดพลาด:</strong> กรุณาลองใหม่`;
+        });
+    }
+
+    document.getElementById('sendMessage').addEventListener('click', () => {
+        const userMessage = document.getElementById('gptMessage').value;
+
+        if (userMessage) {
+            sendGPTMessage(userMessage);
+        } else {
+            document.getElementById('gptResponse').innerHTML = `<strong>ข้อผิดพลาด:</strong> กรุณากรอกข้อความ`;
+        }
+    });
+</script>
+<script>
+    // ป้องกันการเปิด DevTools (F12, Ctrl+Shift+I)
+    document.addEventListener('keydown', function (event) {
+        // ป้องกันการเปิด DevTools ด้วย F12 หรือ Ctrl+Shift+I
+        if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && event.keyCode === 73)) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'การดำเนินการถูกปิด',
+                text: 'คุณไม่สามารถเปิด DevTools ในหน้านี้ได้',
+            });
+        }
+    });
+
+    // ป้องกันการคลิกขวา
+    document.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'error',
+            title: 'การดำเนินการถูกปิด',
+            text: 'คุณไม่สามารถคลิกขวาได้ในหน้านี้',
+        });
+    });
+</script>
+
+</body>
+</html>

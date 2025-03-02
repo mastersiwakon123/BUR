@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>สนับสนุนเรา SHGOX</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href='https://i.pinimg.com/originals/df/a4/81/dfa48113dc818edc8830be98f8827334.jpg' rel='shortcut icon' type='image/x-icon'/>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://cdn.leanhduc.pro.vn/font-awesome/pro-5.15.3/css/all.css' rel='stylesheet'/>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'/>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.css' rel='stylesheet'/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 for alerts -->
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 form">
+                <form autocomplete="off">
+                    <h1 class="text-center">SHGOX</h1>
+                    <h2 class="text-center">ขอบคุณที่สนับสนุน</h2>
+                    <div class="alert alert-success text-center">
+                        <p id="status">สถานะคำสั่ง : ไม่มี</p>
+                        <p id="done">107 API</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">เบอร์โทรศัพท์</label>
+                        <input class="form-control" id="phone" type="number" name="otp" placeholder="กรุณาใส่เบอร์ (10 หลัก)" required maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="Amount">จำนวน</label>
+                        <!-- Setting max value for Amount input -->
+                        <input class="form-control" id="Amount" type="number" name="otp" placeholder="กรุณาใส่จำนวน" min="1" max="10" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control btn btn-primary" id="spam" type="button">เริ่ม ( SMS )</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="row">
+            <div class="col-md-4 offset-md-4 text-center mt-4">
+                <p>คำแนะนำ: กรุณากรอกเบอร์โทรศัพท์และจำนวนที่ต้องการให้ถูกต้องก่อนกด "เริ่ม (SMS)" เพื่อเริ่มส่งคำขอ</p>
+                <p>หมายเหตุ: ระบบจะส่งคำขอให้คุณในจำนวนที่คุณระบุ (สูงสุด 10) พร้อมกับการแจ้งเตือนสถานะการทำงาน</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Function Definitions
+        function displayStatus(message) {
+            $("#status").append(`<br>${message}`);
+        }
+
+        // Function to handle the SMS sending process
+        function handleSMSRequest(phone, amount) {
+            // Prepare the request body
+            const requestData = {
+                phone: phone,
+                amount: amount
+            };
+
+            // Make the API call to the server
+            fetch('/send-sms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // If the request was successful
+                if (data.success) {
+                    displayStatus("คำขอถูกส่งเรียบร้อยแล้ว");
+                    data.results.forEach((result, index) => {
+                        // To simulate sending requests one by one
+                        setTimeout(() => {
+                            displayStatus(result);
+                        }, index * 1000); // Delay each line by 1 second
+                    });
+                } else {
+                    // If the request was not successful
+                    displayStatus("ล้มเหลวในการส่งคำขอ");
+                }
+            })
+            .catch(error => {
+                // Handle any errors
+                displayStatus(`เกิดข้อผิดพลาด: ${error.message}`);
+            });
+        }
+
+        $(document).ready(function() {
+            $("#spam").click(function() {
+                const phone = $("#phone").val();
+                let amount = $("#Amount").val();
+
+                // Perform validation
+                if (!phone || !amount) {
+                    alert("กรุณากรอกข้อมูลให้ครบ");
+                    return;
+                }
+
+                // Validate phone number to be 10 digits
+                if (phone.length !== 10) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'ผิดพลาด',
+                        text: 'กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก'
+                    });
+                    return;
+                }
+
+                // Limit the amount to 10 or less
+                if (amount > 10) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'จำนวนสูงสุดที่สามารถใส่ได้คือ 10'
+                    });
+                    return;
+                }
+
+                // Show status "กำลังส่งคำขอ..."
+                $("#status").text("กำลังส่งคำขอ...");
+
+                // Call the function to send SMS requests
+                handleSMSRequest(phone, amount);
+
+                // Show success message using SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ส่งคำขอเรียบร้อย',
+                    text: 'คำขอถูกส่งไปยังระบบแล้ว!'
+                });
+
+                $("#status").text("สถานะคำสั่ง : ส่งเรียบร้อย");
+            });
+        });
+    </script>
+    <script>
+        // ป้องกันการเปิด DevTools (F12, Ctrl+Shift+I)
+        document.addEventListener('keydown', function (event) {
+            // ป้องกันการเปิด DevTools ด้วย F12 หรือ Ctrl+Shift+I
+            if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && event.keyCode === 73)) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'การดำเนินการถูกปิด',
+                    text: 'คุณไม่สามารถเปิด DevTools ในหน้านี้ได้',
+                });
+            }
+        });
+    
+        // ป้องกันการคลิกขวา
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'การดำเนินการถูกปิด',
+                text: 'คุณไม่สามารถคลิกขวาได้ในหน้านี้',
+            });
+        });
+    </script>
+    
+</body>
+</html>
